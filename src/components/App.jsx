@@ -3,6 +3,7 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { Layout } from './Layout/Layout';
 
 export class App extends Component {
   state = {
@@ -15,9 +16,21 @@ export class App extends Component {
     filter: '',
   };
 
+  handleInputChange = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({
+      [name]: value,
+    });
+  };
+
   addContact = ({ name, number }) => {
-    // console.log('контакт в APP: ', contact);
-    // console.log(this.state);
+    const hasName = this.state.contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (hasName) {
+      return alert(`${name} is already in contacts`);
+    }
 
     this.setState(prevState => {
       return {
@@ -33,36 +46,35 @@ export class App extends Component {
     });
   };
 
-  handleInputChange = e => {
-    console.log(e.currentTarget.value);
-
-    const { name, value } = e.currentTarget;
-    this.setState({
-      [name]: value,
-    });
-  };
-
   filter = () => {
     const { contacts, filter } = this.state;
 
-    const filteredContacts = contacts.filter(contact =>
+    return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase())
     );
-    return filteredContacts;
+  };
+
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: this.state.contacts.filter(contact => contact.id !== id),
+    }));
   };
 
   render() {
     return (
-      <>
+      <Layout>
         <h1>Phonebook</h1>
         <ContactForm addContact={this.addContact} />
         <h2>Contacts</h2>
         <Filter
           filter={this.state.filter}
-          onChangeFilter={this.handleInputChange}
+          handleFilter={this.handleInputChange}
         />
-        <ContactList contacts={this.filter()} />
-      </>
+        <ContactList
+          contacts={this.filter()}
+          deleteContact={this.deleteContact}
+        />
+      </Layout>
     );
   }
 }
