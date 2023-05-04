@@ -1,3 +1,2 @@
-# Книга контактів / PHONEBOOK
 
-### Застосунок зберігання контактів телефонної книги / Application for storing phonebook contacts.
+### Застосунок зберігання контактів телефонної книги / Application for storing phonebook contacts /Книга контактів / PHONEBOOK

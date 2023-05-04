@@ -63,7 +63,7 @@ export class App extends Component {
   render() {
     return (
       <Layout>
-        <h1>Test</h1>
+        <h1>Phonebook</h1>
         <ContactForm addContact={this.addContact} />
         <h2>Contacts</h2>
         <Filter
